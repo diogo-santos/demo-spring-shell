@@ -9,7 +9,7 @@ Maven 3.0+
 ## Instructions
 Import the project from GitHub
 
-Run demo-cl-person app
+Run demo-spring-shell app
 ```
 mvn clean package && java -jar target/demo-spring-shell-0.0.1.jar
 ```
