@@ -31,4 +31,10 @@ public class PersonRepositoryTest {
 		assertThat(personList).extracting(Person::getFirstName).containsOnly(person.getFirstName());
 		assertThat(personList).extracting(Person::getSurname).containsOnly(person.getSurname());
 	}
+
+	@Test
+	public void test() {
+		assertThat("c:/test/".equals("c:\\test\\".replace("\\","/")));
+		System.out.println("c:\\test\\".replace("\\","/"));
+	}
 }
