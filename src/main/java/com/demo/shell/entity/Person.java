@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlRootElement(name = "person")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)

@@ -4,11 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.springframework.shell.jline.InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED;
-import static org.springframework.shell.jline.ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -22,7 +19,7 @@ import com.demo.shell.entity.Person;
 import com.demo.shell.repo.PersonRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = {SPRING_SHELL_INTERACTIVE_ENABLED+"=false",SPRING_SHELL_SCRIPT_ENABLED+"=false"})
+@SpringBootTest(properties = {"spring.shell.interactive.enabled=false","spring.shell.script.enabled=false"})
 public class PersonCommandTest {
 	@Autowired
 	private PersonRepository repository;
@@ -91,51 +88,75 @@ public class PersonCommandTest {
 
 	@Test
 	public void addXmlFileTest() throws Exception {
-		String xml = "<person>" +
-						"<firstName>firstXmlFile</firstName>" +
-						"<surname>lastXmlFile</surname>" +
-					 "</person>";
-		InputStream is = new ByteArrayInputStream(xml.getBytes());
-
+		String xml = "<persons>" +
+                         "<person>" +
+                            "<firstName>firstXmlFile1</firstName>" +
+                            "<surname>lastXmlFile1</surname>" +
+                         "</person>" +
+                         "<person>" +
+                            "<firstName>firstXmlFile2</firstName>" +
+                            "<surname>lastXmlFile2</surname>" +
+                         "</person>" +
+                     "</persons>";
 		PersonCommand cmdSpy = Mockito.spy(this.cmd);
-		doReturn(is)
+		doReturn(new ByteArrayInputStream(xml.getBytes()))
 				.when(cmdSpy)
 				.newFileInputStream(anyString());
 
-		long id = cmdSpy.addXmlFile("person.xml");
+		cmdSpy.addXmlFile("person.xml");
 
 		List<Person> personList = this.repository.findAll();
-		assertThat(personList).extracting(Person::getId).contains(id);
-		assertThat(personList).extracting(Person::getFirstName).contains("firstXmlFile");
-		assertThat(personList).extracting(Person::getSurname).contains("lastXmlFile");
-	}
-
-	@Test
-	public void addXmlTextTest() {
-		String xml = "<person>" +
-						"<firstName>firstXml</firstName>" +
-						"<surname>lastXml</surname>" +
-					 "</person>";
-		long id = this.cmd.addXmlText(xml);
-
-		List<Person> personList = this.repository.findAll();
-		assertThat(personList).extracting(Person::getId).contains(id);
-		assertThat(personList).extracting(Person::getFirstName).contains("firstXml");
-		assertThat(personList).extracting(Person::getSurname).contains("lastXml");
-	}
-
-	@Test
-	public void addXmlTextWhenErrorTest() {
-		String xml = "<person>" +
-						"<firstName>firstXml" +
-						"<surname>lastXml";
-		long id = this.cmd.addXmlText(xml);
-		assertEquals(0, id);
+		assertThat(personList).extracting(Person::getFirstName).contains("firstXmlFile1", "firstXmlFile2");
+		assertThat(personList).extracting(Person::getSurname).contains("lastXmlFile1", "lastXmlFile2");
 	}
 
 	@Test
 	public void addXmlWhenFileNotExistsTest() {
-		long id = this.cmd.addXmlFile("");
-		assertEquals(0, id);
+		String result = this.cmd.addXmlFile("");
+		assertEquals("File not found", result);
+	}
+
+	@Test
+	public void addXmlFileWhenXmlBrokenTest() throws Exception {
+		String xml = "<persons>" +
+						"<person>" +
+							"<firstName>firstXmlBroken" +
+							"<surname>lastXmlBroken";
+		PersonCommand cmdSpy = Mockito.spy(this.cmd);
+		doReturn(new ByteArrayInputStream(xml.getBytes()))
+				.when(cmdSpy)
+				.newFileInputStream(anyString());
+
+		String result = cmdSpy.addXmlFile("person.xml");
+
+		assertEquals("Error processing xml file", result);
+	}
+
+	@Test
+	public void addXmlTextTest() {
+		String xml = "<persons>" +
+                         "<person>" +
+                            "<firstName>firstXml1</firstName>" +
+                            "<surname>lastXml1</surname>" +
+                         "</person>" +
+						 "<person>" +
+							"<firstName>firstXml2</firstName>" +
+							"<surname>lastXml2</surname>" +
+						 "</person>" +
+                    "</persons>";
+		this.cmd.addXmlText(xml);
+
+		List<Person> personList = this.repository.findAll();
+		assertThat(personList).extracting(Person::getFirstName).contains("firstXml1", "firstXml2");
+		assertThat(personList).extracting(Person::getSurname).contains("lastXml1", "lastXml2");
+	}
+
+	@Test
+	public void addXmlTextWhenXmlBrokenTest() {
+		String xml = "<person>" +
+						"<firstName>firstXml" +
+						"<surname>lastXml";
+		String result = this.cmd.addXmlText(xml);
+		assertEquals("Error processing xml", result);
 	}
 }
