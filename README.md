@@ -16,3 +16,6 @@ mvn clean package && java -jar target/demo-spring-shell-0.0.1.jar
 
 ## Test the App
 Now that the shell is running, type help in order to see the list of available commands
+
+
+![Print](https://github.com/diogo-santos/demo-spring-shell/blob/master/print-help.png)
