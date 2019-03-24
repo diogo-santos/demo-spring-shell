@@ -84,7 +84,7 @@ public class PersonCommand {
         return list;
     }
 
-    @ShellMethod("Add persons from xml file [xmlFilePath] - Eg. C:/dir/fie.xml, Content eg. <persons><person><firstName></firstName><surname></surname></person></persons>")
+    @ShellMethod("Add persons from xml file [xmlFilePath] - E.g. C:/dir/file.xml, Content e.g. <persons><person><firstName></firstName><surname></surname></person></persons>")
     String addXmlFile(String xmlFilePath) {
         logger.debug("In addXmlFile with {}", xmlFilePath);
         String result;
