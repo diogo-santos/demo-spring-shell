@@ -1,17 +1,17 @@
-package com.demo.shell.command;
+package com.example.shell.command;
 
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
-import com.demo.shell.entity.Persons;
+import com.example.shell.entity.Persons;
+import com.example.shell.entity.Person;
 import org.slf4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import com.demo.shell.entity.Person;
-import com.demo.shell.repo.PersonRepository;
+import com.example.shell.repo.PersonRepository;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -84,7 +84,7 @@ public class PersonCommand {
         return list;
     }
 
-    @ShellMethod("Add persons from xml file [xmlFilePath] - E.g. C:/dir/file.xml, Content e.g. <persons><person><firstName></firstName><surname></surname></person></persons>")
+    @ShellMethod("Add persons from xml file [xmlFilePath] - Xml file example: <persons><person><firstName>name</firstName><surname>surname</surname></person></persons>")
     String addXmlFile(String xmlFilePath) {
         logger.debug("In addXmlFile with {}", xmlFilePath);
         String result;
@@ -109,7 +109,7 @@ public class PersonCommand {
         return new FileInputStream(new File(path));
     }
 
-    @ShellMethod("Add a person from xml text [xmlText] - Eg. <persons><person><firstName>name</firstName><surname>surname</surname></person></persons>")
+    @ShellMethod("Add a person from xml text [xmlText] - Xml text example: <persons><person><firstName>name</firstName><surname>surname</surname></person></persons>")
     String addXmlText(String xmlText) {
         logger.debug("In addXmlText with {}", xmlText);
         String result = "Error processing xml";

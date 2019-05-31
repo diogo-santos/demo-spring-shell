@@ -1,15 +1,14 @@
-package com.demo.shell.repo;
+package com.example.shell.repo;
 
 import java.util.List;
 
+import com.example.shell.entity.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.demo.shell.entity.Person;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -8,10 +8,10 @@
 		<version>2.1.3.RELEASE</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.demo</groupId>
-	<artifactId>demo-spring-shell</artifactId>
+	<groupId>com.example.shell</groupId>
+	<artifactId>spring-shell</artifactId>
 	<version>0.0.1</version>
-	<name>demo-spring-shell</name>
+	<name>spring-shell</name>
 	<description>Demo project for Spring Shell</description>
 
 	<properties>

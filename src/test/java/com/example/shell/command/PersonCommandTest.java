@@ -1,4 +1,4 @@
-package com.demo.shell.command;
+package com.example.shell.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+import com.example.shell.entity.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -15,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.demo.shell.entity.Person;
-import com.demo.shell.repo.PersonRepository;
+import com.example.shell.repo.PersonRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {"spring.shell.interactive.enabled=false","spring.shell.script.enabled=false"})
