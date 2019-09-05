@@ -1,11 +1,9 @@
 # Spring Shell
-## What was build
 Demo project for Spring Shell
 ## What you'll need
 Java 1.8
 
 Maven 3.0+
-
 ## Instructions
 Import the project from GitHub
 
